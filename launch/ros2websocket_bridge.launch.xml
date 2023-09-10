@@ -1,0 +1,19 @@
+<launch>
+
+  <arg name="server_ip" default="localhost" />
+  <arg name="server_port" default="8000" />
+  <arg name="robot_id" default="CB-00" />
+
+  <include file="$(find-pkg-share ros2websocket)/launch/ros2websocket_receiver_node.launch.py">
+    <arg name="server_ip" value="$(var server_ip)" />
+    <arg name="server_port" value="$(var server_port)" />
+    <arg name="robot_id" value="$(var robot_id)" />
+  </include>
+
+  <include file="$(find-pkg-share ros2websocket)/launch/ros2websocket_sender_node.launch.py">
+    <arg name="server_ip" value="$(var server_ip)" />
+    <arg name="server_port" value="$(var server_port)" />
+    <arg name="robot_id" value="$(var robot_id)" />
+  </include>
+
+</launch>

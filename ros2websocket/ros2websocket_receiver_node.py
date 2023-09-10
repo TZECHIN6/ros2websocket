@@ -17,7 +17,19 @@ class WebsocketReceiver(Node):
         timer_period = 0.1
         self.timer = self.create_timer(timer_period, self.timer_callback)
         
-        self.uri = 'ws://localhost:8000/ws/001'
+        self.declare_parameter('server_ip', 'localhost')
+        self.declare_parameter('server_port', 8000)
+        self.declare_parameter('robot_id', rclpy.Parameter.Type.STRING)
+
+        server_ip = self.get_parameter('server_ip').get_parameter_value().string_value
+        server_port = self.get_parameter('server_port').get_parameter_value().integer_value
+        robot_id = self.get_parameter('robot_id').get_parameter_value().string_value
+        self.get_logger().info(f'websocket ip: {server_ip}')
+        self.get_logger().info(f'websocket port: {server_port}')
+        self.get_logger().info(f'websocket client id: {robot_id}')
+        self.uri = f'ws://{server_ip}:{server_port}/ws/{robot_id}'
+        self.get_logger().info(f'websocket uri: {self.uri}')
+
         self.connection_state = False
 
     def timer_callback(self):
